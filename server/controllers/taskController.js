@@ -3,18 +3,12 @@ const Task = require("../models/Task");
 // Create Task
 const createTask = async (req, res) => {
   try {
-    const { title, description, user } = req.body;
-
-    if (!title || !user) {
-      return res.status(400).json({
-        message: "Title and User are required",
-      });
-    }
+    const { title, description } = req.body;
 
     const task = await Task.create({
       title,
       description,
-      user,
+      user: req.user._id,
     });
 
     res.status(201).json(task);
@@ -28,7 +22,9 @@ const createTask = async (req, res) => {
 // Get All Tasks
 const getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({
+      user: req.user._id,
+    });
 
     res.status(200).json(tasks);
   } catch (error) {
@@ -41,7 +37,10 @@ const getTasks = async (req, res) => {
 // Get Task By ID
 const getTaskById = async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
 
     if (!task) {
       return res.status(404).json({
@@ -60,8 +59,11 @@ const getTaskById = async (req, res) => {
 // Update Task
 const updateTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndUpdate(
-      req.params.id,
+    const task = await Task.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        user: req.user._id,
+      },
       req.body,
       {
         new: true,
@@ -86,7 +88,10 @@ const updateTask = async (req, res) => {
 // Delete Task
 const deleteTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
+    const task = await Task.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user._id,
+    });
 
     if (!task) {
       return res.status(404).json({
