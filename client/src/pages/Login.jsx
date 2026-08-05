@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
@@ -12,7 +13,6 @@ const Login = () => {
     password: "",
   });
 
-  // Handle Input Change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,7 +20,6 @@ const Login = () => {
     });
   };
 
-  // Handle Login
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,11 +29,11 @@ const Login = () => {
       // Save user & token in Context + localStorage
       login(response.data);
 
-      alert("Login Successful!");
+      toast.success("Login Successful!");
 
       navigate("/");
     } catch (error) {
-      alert(error.response?.data?.message || "Login Failed");
+      toast.error(error.response?.data?.message || "Login Failed");
     }
   };
 
@@ -65,9 +64,7 @@ const Login = () => {
         <br />
         <br />
 
-        <button type="submit">
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
 
       <br />

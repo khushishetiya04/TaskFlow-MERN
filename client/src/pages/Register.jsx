@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import API from "../services/api";
 
 const Register = () => {
@@ -24,11 +25,11 @@ const Register = () => {
     try {
       await API.post("/auth/register", formData);
 
-      alert("Registration Successful!");
+      toast.success("Registration Successful!");
 
       navigate("/login");
     } catch (error) {
-      alert(error.response?.data?.message || "Registration Failed");
+      toast.error(error.response?.data?.message || "Registration Failed");
     }
   };
 
@@ -67,9 +68,7 @@ const Register = () => {
 
         <br /><br />
 
-        <button type="submit">
-          Register
-        </button>
+        <button type="submit">Register</button>
       </form>
 
       <br />

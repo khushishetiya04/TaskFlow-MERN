@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const registerUser = async(req, res) => {
+const registerUser = async (req, res) => {
     try {
     // Get data from request body
     const { name, email, password } = req.body;
@@ -108,4 +108,4 @@ const loginUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-}
+};

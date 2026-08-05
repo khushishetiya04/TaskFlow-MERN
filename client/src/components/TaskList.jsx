@@ -15,6 +15,15 @@ function TaskList({ tasks }) {
 
           <p>{task.description}</p>
 
+          <p><strong>Priority:</strong> {task.priority}</p>
+
+          <p>
+            <strong>Due Date:</strong>{" "}
+            {task.dueDate
+              ? new Date(task.dueDate).toLocaleDateString()
+              : "No Due Date"}
+          </p>
+
           <p>
             <strong>Completed:</strong>{" "}
             {task.completed ? "Yes" : "No"}

@@ -25,7 +25,6 @@ function Dashboard() {
       setError("");
     } catch (err) {
       setError("Failed to load tasks.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -43,18 +42,9 @@ function Dashboard() {
   });
 
   const totalTasks = tasks.length;
-
-  const completedTasks = tasks.filter(
-    (task) => task.completed
-  ).length;
-
-  const pendingTasks = tasks.filter(
-    (task) => !task.completed
-  ).length;
-
-  const highPriorityTasks = tasks.filter(
-    (task) => task.priority === "High"
-  ).length;
+  const completedTasks = tasks.filter(task => task.completed).length;
+  const pendingTasks = tasks.filter(task => !task.completed).length;
+  const highPriorityTasks = tasks.filter(task => task.priority === "High").length;
 
   return (
     <>

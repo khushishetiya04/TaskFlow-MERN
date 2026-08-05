@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import API from "../services/api";
+
 
 const TaskForm = ({ fetchTasks }) => {
   const [formData, setFormData] = useState({
@@ -9,7 +11,6 @@ const TaskForm = ({ fetchTasks }) => {
     dueDate: "",
   });
 
-  // Handle Input Change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -17,14 +18,13 @@ const TaskForm = ({ fetchTasks }) => {
     });
   };
 
-  // Handle Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await API.post("/tasks", formData);
 
-      alert("Task Added Successfully!");
+      toast.success("Task Added Successfully!");
 
       // Refresh task list
       fetchTasks();
@@ -38,7 +38,7 @@ const TaskForm = ({ fetchTasks }) => {
       });
 
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to add task");
+      toast.error(error.response?.data?.message || "Failed to add task");
     }
   };
 
@@ -47,7 +47,6 @@ const TaskForm = ({ fetchTasks }) => {
       <h2>Add New Task</h2>
 
       <form onSubmit={handleSubmit}>
-
         <input
           type="text"
           name="title"
@@ -89,9 +88,7 @@ const TaskForm = ({ fetchTasks }) => {
 
         <br /><br />
 
-        <button type="submit">
-          Add Task
-        </button>
+        <button type="submit">Add Task</button>
 
       </form>
     </div>

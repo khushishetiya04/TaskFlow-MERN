@@ -6,7 +6,6 @@ const API = axios.create({
 
 // Runs before every request
 API.interceptors.request.use((config) => {
-
   const token = localStorage.getItem("token");
 
   if (token) {
