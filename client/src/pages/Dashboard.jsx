@@ -54,34 +54,51 @@ function Dashboard() {
         <h1>Dashboard</h1>
 
         <div className="dashboard-counts">
-          <p><strong>Total:</strong> {totalTasks}</p>
-          <p><strong>Completed:</strong> {completedTasks}</p>
-          <p><strong>Pending:</strong> {pendingTasks}</p>
-          <p><strong>High Priority:</strong> {highPriorityTasks}</p>
+
+          <div className="count-card">
+            <h3>Total Tasks</h3>
+            <h2>{totalTasks}</h2>
+          </div>
+
+          <div className="count-card">
+            <h3>Completed</h3>
+            <h2>{completedTasks}</h2>
+          </div>
+
+          <div className="count-card">
+            <h3>Pending</h3>
+            <h2>{pendingTasks}</h2>
+          </div>
+
+          <div className="count-card">
+            <h3>High Priority</h3>
+            <h2>{highPriorityTasks}</h2>
+          </div>
+
         </div>
 
         <br />
 
-        <input
-          type="text"
-          placeholder="Search tasks..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="dashboard-controls">
 
-        <br /><br />
+          <input
+            type="text"
+            placeholder="🔍 Search tasks..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        >
-          <option value="All">All Priorities</option>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option value="All">All Priorities</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
 
-        <br /><br />
+        </div>
 
         <TaskForm fetchTasks={fetchTasks} />
 

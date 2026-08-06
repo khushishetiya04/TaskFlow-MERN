@@ -28,54 +28,63 @@ const Register = () => {
       toast.success("Registration Successful!");
 
       navigate("/login");
+
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration Failed");
     }
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+    <div className="auth-container">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+      <div className="auth-card">
 
-        <br /><br />
+        <h1>Create Account</h1>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <p>Register to start managing your tasks.</p>
 
-        <br /><br />
+        <form onSubmit={handleSubmit}>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
 
-        <br /><br />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-        <button type="submit">Register</button>
-      </form>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-      <br />
+          <button type="submit">
+            Register
+          </button>
 
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+        </form>
+
+        <p className="auth-link">
+          Already have an account?
+          <Link to="/login"> Login</Link>
+        </p>
+
+      </div>
+
     </div>
   );
 };

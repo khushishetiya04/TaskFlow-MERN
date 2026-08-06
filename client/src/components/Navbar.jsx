@@ -1,18 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaTasks } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
-
-const navStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "15px 30px",
-  background: "#f4f4f4",
-};
-
-const userStyle = {
-  marginRight: "20px",
-};
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -24,15 +13,18 @@ const Navbar = () => {
   };
 
   return (
-    <nav style={navStyle}>
-      <h2>TaskFlow</h2>
+    <nav className="navbar">
+      <div className="logo">
+        <FaTasks />
+        <span>TaskFlow</span>
+      </div>
 
-      <div>
-        <span style={userStyle}>
-          Welcome, {user?.name}
-        </span>
+      <div className="nav-right">
+        <p className="welcome">
+          Welcome, <strong>{user?.name}</strong>
+        </p>
 
-        <button onClick={handleLogout}>
+        <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
       </div>

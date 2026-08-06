@@ -26,7 +26,6 @@ const Login = () => {
     try {
       const response = await API.post("/auth/login", formData);
 
-      // Save user & token in Context + localStorage
       login(response.data);
 
       toast.success("Login Successful!");
@@ -38,41 +37,47 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="auth-container">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+      <div className="auth-card">
 
-        <br />
-        <br />
+        <h1>Welcome Back 👋</h1>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <p>Login to continue managing your tasks.</p>
 
-        <br />
-        <br />
+        <form onSubmit={handleSubmit}>
 
-        <button type="submit">Login</button>
-      </form>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-      <br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-      <p>
-        Don't have an account?{" "}
-        <Link to="/register">Register</Link>
-      </p>
+          <button type="submit">
+            Login
+          </button>
+
+        </form>
+
+        <p className="auth-link">
+          Don't have an account?
+          <Link to="/register"> Register</Link>
+        </p>
+
+      </div>
+
     </div>
   );
 };

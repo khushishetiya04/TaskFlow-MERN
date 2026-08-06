@@ -11,28 +11,41 @@ function TaskList({ tasks }) {
     <div className="task-list">
       {tasks.map((task) => (
         <div className="task-card" key={task._id}>
-          <h3>{task.title}</h3>
 
-          <p>{task.description}</p>
+          <div className="task-header">
+            <h3>{task.title}</h3>
 
-          <p><strong>Priority:</strong> {task.priority}</p>
+            <span className={`priority ${task.priority.toLowerCase()}`}>
+              {task.priority}
+            </span>
+          </div>
 
-          <p>
-            <strong>Due Date:</strong>{" "}
-            {task.dueDate
-              ? new Date(task.dueDate).toLocaleDateString()
-              : "No Due Date"}
-          </p>
+          <p>{task.description || "No description provided."}</p>
 
-          <p>
-            <strong>Completed:</strong>{" "}
-            {task.completed ? "Yes" : "No"}
-          </p>
+          <div className="task-info">
+
+            <span>
+              📅{" "}
+              {task.dueDate
+                ? new Date(task.dueDate).toLocaleDateString()
+                : "No Due Date"}
+            </span>
+
+            <span
+              className={
+                task.completed ? "status done" : "status pending"
+              }
+            >
+              {task.completed ? "Completed" : "Pending"}
+            </span>
+
+          </div>
 
           <div className="task-actions">
             <button>Edit</button>
             <button>Delete</button>
           </div>
+
         </div>
       ))}
     </div>
