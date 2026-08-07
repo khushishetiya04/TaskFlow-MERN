@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import API from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,11 +25,10 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await API.post("/auth/register", formData);
-
+      const response = await API.post("/auth/register", formData);
+      login(response.data);
       toast.success("Registration Successful!");
-
-      navigate("/login");
+      navigate("/");
 
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration Failed");

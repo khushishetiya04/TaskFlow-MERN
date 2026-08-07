@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import API from "../services/api";
 
 
-const TaskForm = ({ fetchTasks }) => {
+const TaskForm = ({ fetchTasks, editingTask, setEditingTask }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     priority: "Low",
     dueDate: "",
   });
+
+  useEffect(() => {
+    if (editingTask) {
+      setFormData({
+        title: editingTask.title,
+        description: editingTask.description,
+        priority: editingTask.priority,
+        dueDate: editingTask.dueDate
+          ? editingTask.dueDate.substring(0, 10)
+          : "",
+      });
+    }
+  }, [editingTask]);
 
   const handleChange = (e) => {
     setFormData({
@@ -20,16 +33,18 @@ const TaskForm = ({ fetchTasks }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await API.post("/tasks", formData);
+      if (editingTask) {
+        await API.put(`/tasks/${editingTask._id}`, formData);
+        toast.success("Task Updated Successfully!");
+        setEditingTask(null);
+      } else {
+        await API.post("/tasks", formData);
+        toast.success("Task Added Successfully!");
+      }
 
-      toast.success("Task Added Successfully!");
-
-      // Refresh task list
       fetchTasks();
 
-      // Clear form
       setFormData({
         title: "",
         description: "",
@@ -38,13 +53,15 @@ const TaskForm = ({ fetchTasks }) => {
       });
 
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to add task");
+      toast.error(error.response?.data?.message || "Operation Failed");
     }
   };
 
   return (
     <div className="task-form">
-      <h2>Add New Task</h2>
+      <h2>
+        {editingTask ? "Edit Task" : "Add New Task"}
+      </h2>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -88,7 +105,9 @@ const TaskForm = ({ fetchTasks }) => {
 
         <br /><br />
 
-        <button type="submit">Add Task</button>
+        <button type="submit">
+          {editingTask ? "Update Task" : "Add Task"}
+        </button>
 
       </form>
     </div>

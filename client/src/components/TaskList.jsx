@@ -1,4 +1,24 @@
-function TaskList({ tasks }) {
+import API from "../services/api";
+import { toast } from "react-toastify";
+
+function TaskList({ tasks, fetchTasks,setEditingTask}) {
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this task?")) {
+      return;
+    }
+
+    try {
+      await API.delete(`/tasks/${id}`);
+
+      toast.success("Task deleted successfully!");
+
+      fetchTasks();
+
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Delete failed");
+    }
+  };
+
   if (tasks.length === 0) {
     return (
       <div className="task-list">
@@ -42,8 +62,8 @@ function TaskList({ tasks }) {
           </div>
 
           <div className="task-actions">
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => setEditingTask(task)}>Edit</button>
+            <button onClick={() => handleDelete(task._id)}>Delete</button>
           </div>
 
         </div>

@@ -10,6 +10,7 @@ function Dashboard() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [editingTask, setEditingTask] = useState(null);
 
   useEffect(() => {
     fetchTasks();
@@ -100,14 +101,22 @@ function Dashboard() {
 
         </div>
 
-        <TaskForm fetchTasks={fetchTasks} />
+        <TaskForm 
+          fetchTasks={fetchTasks} 
+          editingTask={editingTask}
+          setEditingTask={setEditingTask}
+        />
 
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <TaskList tasks={filteredTasks} />
+          <TaskList 
+            tasks={filteredTasks} 
+            fetchTasks={fetchTasks}
+            setEditingTask={setEditingTask}
+          />
         )}
       </div>
     </>
